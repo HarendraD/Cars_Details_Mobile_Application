@@ -19,7 +19,7 @@ export default function Login() {
     const [password, setPassword] = useState('');
 
     const saveData = () => {
-        fetch('http://localhost:4000/user/register', {
+        fetch('http://192.168.8.138:4000/user/register', {
             method: 'POST',
             body: JSON.stringify({
                 name: name,

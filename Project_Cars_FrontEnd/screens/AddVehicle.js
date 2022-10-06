@@ -164,7 +164,7 @@ export default function AddVehicle() {
                                                 carDetail.regNumber != ''
 
                                                     ? fetch(
-                                                        'http://localhost:4000/car',
+                                                        'http://192.168.8.138:4000/car/save',
                                                         {
                                                             method: 'POST',
                                                             body: JSON.stringify(carDetail),
@@ -192,7 +192,7 @@ export default function AddVehicle() {
                                             onPress={async e => {
                                                 carDetail.regNumber != ''
                                                     ? fetch(
-                                                        'http://localhost:4000/car' + carDetail.regNumber,
+                                                        'http://192.168.8.138:4000/car' + carDetail.regNumber,
                                                         {
                                                             method: 'DELETE',
                                                         },

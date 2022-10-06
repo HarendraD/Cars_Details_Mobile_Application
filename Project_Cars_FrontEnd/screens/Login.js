@@ -6,6 +6,7 @@ import {
     SafeAreaView,
     View,
     ScrollView,
+    Alert
 } from 'react-native';
 
 
@@ -62,7 +63,7 @@ export default function Login({ navigation }) {
                                             } else {
 
                                                 let res = await fetch(
-                                                    'http://localhost:4000/user/login?email=' +
+                                                    'http://192.168.8.138:4000/user/login?email=' +
                                                     loginData.email +
                                                     '&password=' +
                                                     loginData.password,
