@@ -26,29 +26,7 @@ export default function AddVehicle() {
     }, []);
 
     const [imageUri, setImageUri] = useState('')
-    const openCamera = () => {
-        let options = {
-            storageOption: {
-
-                path: 'images',
-                mediaType: 'photo'
-            },
-            includeBase64: true,
-        }
-
-        launchCamera(options, response => {
-            if (response.didCancel) {
-            } else if (response.error) {
-                console.log('ImagePicker Error: ', response.error);
-            } else if (response.customButton) {
-                alert(response.customButton);
-            } else {
-                const source = { uri: 'data:image/jpeg;base64' + response.base64 };
-                setImageUri(source)
-            }
-        });
-    }
-
+    
     return (
         <NativeBaseProvider>
             <ScrollView>
