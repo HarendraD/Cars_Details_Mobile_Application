@@ -1,10 +1,11 @@
-import { View, StyleSheet, Image, ScrollView, Alert, ImageBackground } from 'react-native'
+import { View, StyleSheet, Image, ScrollView, Alert, ImageBackground,Dimensions} from 'react-native'
 import React, { useState, useEffect } from 'react'
 import {  NativeBaseProvider, Button, VStack, Center, Heading, HStack, Input } from "native-base";
 import { launchImageLibrary } from 'react-native-image-picker';
-import { storeCar } from './StoreCar';
+
 
 export default function AddVehicle() {
+    const win = Dimensions.get('window');
 
 
     const [carDetail, setCarDetail] = useState({
@@ -20,7 +21,6 @@ export default function AddVehicle() {
         setCarDetail(() => {
             return {
                 ...carDetail,
-                regNumber: storeCar.regNumber,
             };
         });
     }, []);
@@ -52,7 +52,6 @@ export default function AddVehicle() {
     return (
         <NativeBaseProvider>
             <ScrollView>
-
                 <View style={styles.container}>
                     <ImageBackground source={require('../assets/BackGround.png')}
                         style={styles.bgImage}>
@@ -82,6 +81,23 @@ export default function AddVehicle() {
                                 </HStack>
 
                             </Center>
+                            <Image
+                                resizeMode="stretch"
+                                source={{ uri: carDetail.image }}
+                                
+                                style={{
+                                    width: '90%',
+                                    height: win.width/2,
+                                    resizeMode: "contain",
+                                    alignSelf: "center",
+                                    borderWidth: 1,
+                                    marginLeft:40,
+                                    marginRight:40,
+                                    borderRadius: 20,
+                                  }}
+                            >
+
+                            </Image>
 
                             <Center w="500" h="700">
                                 <VStack space={8} alignItems="center" my="2">
@@ -192,7 +208,7 @@ export default function AddVehicle() {
                                             onPress={async e => {
                                                 carDetail.regNumber != ''
                                                     ? fetch(
-                                                        'http://192.168.8.138:4000/car' + carDetail.regNumber,
+                                                        'http://192.168.8.138:4000/car?regNumber=' + carDetail.regNumber,
                                                         {
                                                             method: 'DELETE',
                                                         },
@@ -203,10 +219,10 @@ export default function AddVehicle() {
                                                         })
                                                         .catch(res => {
                                                             console.log(res);
-
+                
                                                             Alert.alert('Car Deleting is Unsuccessful');
                                                         })
-                                                    : Alert.alert('Please Fill Relevant Fields');
+                                                    : Alert.alert('Please Fill Details');
                                             }}
                                         >
                                             Delete
@@ -218,9 +234,6 @@ export default function AddVehicle() {
                         </VStack>
 
                     </ImageBackground>
-
-
-
                 </View>
             </ScrollView>
         </NativeBaseProvider >
@@ -229,11 +242,12 @@ export default function AddVehicle() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        width:'100%'
     },
     bgImage: {
         position: 'relative',
         width: 560,
-        height: 1020,
+        height: 1200,
     },
     textInput: {
         textAlign: 'left',

@@ -14,22 +14,23 @@ router.get('/', async (req, res) => {
       res.send('Err: ' + err)
    }
 })
-router.get("/login", async (req, resp) => {
+router.get('/login', async (req, resp) => {
    try {
-     let res = await User.find();
-     console.log(res)
-     let response = undefined;
-     res.forEach(async (e) => {
-      console.log(e.email)
-       if ((e.email === req.query.email) & (e.password === req.query.password)) {
-         response = true;
-       }
-     });
-     resp.json(response);
+      let res = await User.find();
+      let response = undefined;
+      res.forEach(async (e) => {
+
+         if ((e.email === req.query.email) & (e.password === req.query.password)) {
+            console.log(e.email + "/////" + e.password)
+            console.log("////" + req.query.email + "////////" + req.query.password)
+            response = true;
+         }
+      });
+      resp.json(response);
    } catch (err) {
-     resp.json({ message: err });
+      resp.json({ message: err });
    }
- });
+});
 
 
 router.post('/register', async (req, res) => {
@@ -47,14 +48,13 @@ router.post('/register', async (req, res) => {
       res.send('Err: ' + err)
    }
 })
-router.delete("/:_id",async(req,resp)=>{
-   try{
-      console.log("awaaaaaaaaaaaa")
-       const user = await User.findById(req.params._id);
-       const response = await user.remove()
-       resp.json(response);
-   }catch(err){
-       resp.json(err);
+router.delete('/', async (req, resp) => {
+   try {
+      const user = await User.findById(req.params.name);
+      const response = await user.remove()
+      resp.json(response);
+   } catch (err) {
+      resp.json(err);
    }
 })
 

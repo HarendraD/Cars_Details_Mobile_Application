@@ -8,6 +8,7 @@ import {
     ScrollView,
     Alert
 } from 'react-native';
+import { LogData } from 'react-native/Libraries/LogBox/LogBox';
 
 
 export default function Login({ navigation }) {
@@ -56,40 +57,39 @@ export default function Login({ navigation }) {
                                         placeholder="Password" w="80%" />
                                     <Button style={styles.btn} size="lg" variant="solid"
                                         onPress={async () => {
-                                            navigation.navigate('Vehicle');
                                             if ((loginData.email === '') | (loginData.password === '')) {
-                                                Alert.alert('User Login is Unsuccessful');
-
+                                              Alert.alert('insert user name or password');
+                              
                                             } else {
-
-                                                let res = await fetch(
-                                                    'http://192.168.8.138:4000/user/login?email=' +
-                                                    loginData.email +
-                                                    '&password=' +
-                                                    loginData.password,
-                                                    {
-                                                        method: 'GET',
-                                                    },
-                                                )
-                                                    .then(async res => {
-                                                        let bool = await res.json();
-                                                        console.log(bool);
-                                                        if (bool === true) {
-                                                            console.log(bool);
-                                                            setLoginObj(prevState => {
-                                                                return {
-                                                                    email: '',
-                                                                    password: '',
-                                                                };
-                                                            });
-                                                            navigation.navigate('Vehicle');
-                                                        }
-                                                    })
-                                                    .catch(async res => {
-                                                        Alert.alert('User Login is Unsuccessful');
+                              
+                                              let res = await fetch(
+                                                'http://192.168.8.138:4000/user/login?email=' +
+                                                loginData.email +
+                                                '&password=' +
+                                                loginData.password,
+                                                {
+                                                  method: 'GET',
+                                                },
+                                              )
+                                                .then(async res => {
+                                                  let bool = await res.json();
+                                                  console.log(bool);
+                                                  if (bool === true) {
+                                                    console.log(bool);
+                                                    setLoginData(prevState => {
+                                                      return {
+                                                        email: '',
+                                                        password: '',
+                                                      };
                                                     });
+                                                    navigation.navigate('Vehicle');
+                                                  }
+                                                })
+                                                .catch(async res => {
+                                                  Alert.alert('Check email and password');
+                                                });
                                             }
-                                        }}
+                                          }}
                                         _text={{
                                             color: "#1F2937", fontSize: 30, pr: 20, pl: 20
                                         }}>
